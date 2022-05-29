@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('question_types', function (Blueprint $table) {
+        Schema::create('questions_feedback_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-//            $table->longText('content');
+            $table->foreignId('feedback_form_id')->constrained();
+            $table->foreignId('question_id')->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_types');
+        Schema::dropIfExists('questions_feedback_forms');
     }
 };

@@ -16,6 +16,19 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('content.forms')" :active="request()->routeIs('forms')">
+                        {{ __('Forms') }}
+                    </x-nav-link>
+                </div>
+{{--                @can('user_management_access')--}}
+{{--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
+{{--                    <x-nav-link :href="route('admin.users')" :active="request()->routeIs('users')">--}}
+{{--                        {{ __('Users') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                </div>--}}
+{{--                @endcan--}}
             </div>
 
             <!-- Settings Dropdown -->

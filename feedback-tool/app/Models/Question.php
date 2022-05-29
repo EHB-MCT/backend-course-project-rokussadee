@@ -14,11 +14,20 @@ class Question extends Model
         'options'
     ];
 
-    public function forms() {
-        return $this->belongsToMany(FeedbackForm::class);
+    protected $casts =[
+        'options' => 'array'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function questiontype() {
-        return $this->hasOne(QuestionType::class);
+    public function forms() {
+        return $this->belongsToMany(FeedbackForm::class, 'questions_feedback_forms', 'question_id', 'feedback_form_id');
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'questions_categories', 'question_id','category_id' );
     }
 }

@@ -20,6 +20,6 @@ class Session extends Model
     }
 
     public function forms() {
-        return $this->hasMany(FeedbackForm::class);
+        return $this->belongsToMany(Session::class, 'feedback_forms_sessions', 'session_id', 'feedback_form_id');
     }
 }

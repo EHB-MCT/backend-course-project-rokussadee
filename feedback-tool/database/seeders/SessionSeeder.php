@@ -15,9 +15,8 @@ class SessionSeeder extends Seeder
      */
     public function run()
     {
-        Session::truncate();
 
-        Session::create([
+        $session1 = Session::create([
 
             'title' => 'Admins First Session',
             'started_at' => now(),
@@ -26,7 +25,7 @@ class SessionSeeder extends Seeder
             'slug' => 'admin-first-session'
         ]);
 
-        Session::create([
+        $session2 = Session::create([
 
             'title' => 'Rokus First Session',
             'started_at' => now(),

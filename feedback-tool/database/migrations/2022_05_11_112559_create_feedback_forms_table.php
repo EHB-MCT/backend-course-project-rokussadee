@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('title');
-            $table->string('description', 250);
-            $table->integer('q_count');
+            $table->string('description', 500);
             $table->foreignId('user_id');
-            $table->foreignId('session_id');
             $table->timestamps();
         });
     }

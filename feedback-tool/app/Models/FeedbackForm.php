@@ -20,11 +20,11 @@ class FeedbackForm extends Model
     }
 
     public function sessions() {
-        return $this->belongsToMany(Session::class);
+        return $this->belongsToMany(Session::class, 'feedback_forms_sessions', 'feedback_form_id', 'session_id');
     }
 
     public function questions() {
-        return $this->hasMany(Question::class);
+        return $this->belongsToMany(Question::class,'questions_feedback_forms', 'feedback_form_id', 'question_id' );
     }
 
 }

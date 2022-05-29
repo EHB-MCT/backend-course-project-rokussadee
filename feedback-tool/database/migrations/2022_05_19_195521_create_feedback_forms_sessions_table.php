@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('feedback_forms_sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('title');
-            $table->json('options');
-            $table->foreignId('user_id');
+            $table->foreignId('feedback_form_id')->constrained();
+            $table->foreignId('session_id')->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('feedback_forms_sessions');
     }
 };

@@ -17,9 +17,6 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-//        DB::table('users')->truncate();
-//        DB::table('roles')->truncate();
-//        DB::table('permissions')->truncate();
         //Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -41,6 +38,12 @@ class PermissionSeeder extends Seeder
             'user_show',
             'user_delete',
             'user_access',
+            // Category permissions
+            'category_create',
+            'category_edit',
+            'category_show',
+            'category_delete',
+            'category_access',
             // Session permissions
             'session_create',
             'session_edit',
