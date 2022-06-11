@@ -10,6 +10,7 @@ inputs.forEach(input => {
 })
 
 editButtons.forEach(b => {
+
     b.addEventListener('click', (e) => {
         e.preventDefault();
         let data = b.getAttribute("data-id")
