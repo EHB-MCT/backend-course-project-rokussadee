@@ -12,7 +12,9 @@ class FeedbackForm extends Model
     protected $fillable = [
         'title',
         'description',
-        'q_count'
+        'q_count',
+        'slug',
+        'user_id'
     ];
 
     public function user(){

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\AutoCompleteController;
 use \App\Http\Controllers\FormController;
 use \App\Http\Controllers\UserController;
 use App\Http\Controllers\QuestionController;
@@ -26,16 +26,22 @@ Route::middleware(['auth', 'verified'])->group(function(){
 
     Route::prefix('forms')->name('content.')->group(function() {
         Route::get('/', [FormController::class, 'getIndex'])->name('forms');
-        Route::get('/{form:slug}', [FormController::class, 'getForm'])->name('form');
-        Route::get('/{form:slug}/edit', [FormController::class, 'editForm'])->name('editform');
+        Route::get('/form/{form:slug}', [FormController::class, 'getForm'])->name('form');
+        Route::get('/form/{form:slug}/edit', [FormController::class, 'editForm'])->name('editform');
+        Route::get('/create', [FormController::class, 'creator'])->name('createform');
+        Route::post('/post', [FormController::class, 'postForm'])->name('postform');
     });
 
-    Route::patch('question/update/{id}', [QuestionController::class, 'update'])->name('question.update');
+    Route::prefix('question')->name('question.')->group(function() {
+        Route::post('post/{form:id}', [QuestionController::class, 'postQuestion'])->name('postquestion');
+        Route::patch('/update/{id}', [QuestionController::class, 'update'])->name('update');
+    });
 
     Route::prefix('admin')->name('admin.')->group( function() {
         Route::get('/users', [UserController::class, 'getIndex'])->name('admin');
     });
-});
+
+    Route::get('ajax-autocomplete-search', [AutoCompleteController::class,'selectSearch']);});
 
 
 

@@ -11,7 +11,10 @@ class Question extends Model
 
     protected $fillable =[
         'title',
-        'options'
+        'options',
+        'slug',
+        'user_id',
+
     ];
 
     protected $casts =[

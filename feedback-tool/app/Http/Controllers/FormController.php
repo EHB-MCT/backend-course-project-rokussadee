@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackForm;
-use App\Models\Question;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 class FormController extends Controller
 {
     public function getIndex() {
@@ -29,6 +30,32 @@ class FormController extends Controller
 //            dd($form);
             return view('content.forms.form', ['form'=>$form, 'questions' => $questions]);
         }
+    }
+
+    public function creator()
+    {
+        $id = Auth::id();
+
+        return view('content.forms.create', ['id'=>$id]);
+    }
+
+    public function postForm(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:30',
+            'description' => 'required|max:500',
+            'user_id' => 'required'
+        ]);
+        $form = new FeedbackForm([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'user_id' => $request->input('user_id'),
+            'slug' => Str::slug($request->input('title'))
+        ]);
+//        $form->user->attach(Auth::user());
+        $form->save();
+
+        return redirect()->route('content.form', array(Str::slug($request->input('title'))));
     }
 
     public function editForm($slug)
