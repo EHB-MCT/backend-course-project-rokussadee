@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\FeedbackForm;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -25,9 +26,11 @@ class QuestionController extends Controller
             'user_id' => $request->input('user_id')
         ]);
 //        dd($question);
-        $categories = $request->input('categories');
+        $categories = $request->get('livesearch');
         foreach ($categories as $category) {
-            $question->categories()->attach($category);
+            $dbCategory = Category::class::where('title', '=', $category)->first();
+//            dd($dbCategory);
+            $question->categories()->attach($dbCategory);
         }
 
         $form = FeedbackForm::class::where('id' ,'=', $id)->first();

@@ -30,8 +30,8 @@
         </div>
 
         <div id="myModal" class="form-group">
-            <label for="categorySelection">Selecteer een categorie:</label>
-            <select id="categorySelection" multiple="multiple" class="livesearch form-control p-3" name="livesearch"></select>
+            <label for="categorySelection">Voeg categorieën toe:</label>
+            <select id="categorySelection" multiple class="livesearch form-control p-3" name="livesearch[]"></select>
         </div>
         <script type="text/javascript">
             $('#categorySelection').select2({
@@ -50,8 +50,10 @@
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
+                                // console.log(item)
                                 return {
                                     text: item.title,
+                                    id: item.title
                                 }
                             })
                         };
@@ -65,15 +67,16 @@
                 templateResult: formatCategory,
                 templateSelection: function (category) {
                     return category.text;
-                }
+                },
+                closeOnSelect: false,
+                allowClear: true
             });
             function formatCategory(category) {
                 if (category.loading)
                 {
                     return category.text;
                 }
-                console.log('formatRepo category', category);
-                let markup = "<div class='select2-result-categoriessitory__title fs-lg fw-500'>" + category.text + "</div>";
+                let markup = "<option value=" + category.text + " class='select2-result-categoriessitory__title fs-lg fw-500'>" + category.text + "</option>";
                 return markup;
             }
         </script>
@@ -82,10 +85,21 @@
 
         <!-- body -->
 
-        <button class="text-green-500 text-sm py-2 px-4 bg-green-50 hover:bg-green-100 hover:text-green-800 rounded font-semibold" type="submit"> Submit Question </button>
+        <button class="text-green-500 text-sm py-2 px-4 bg-green-50 hover:bg-green-100 hover:text-green-800 rounded font-semibold" type="submit" name="submit"> Submit Question </button>
 
     </div>
 
 
 </form>
+<?php
+    if (isset($_POST['submit'])) {
+        if (!empty($_POST['livesearch'])) {
+            foreach ($_POST['livesearch'] as $selected) {
+                dd($selected);
+            }
+        } else {
+            dd('please select a value');
+        }
+    }
+    ?>
 </div>
