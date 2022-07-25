@@ -6,7 +6,6 @@ let inputs = document.querySelectorAll("input")
 inputs.forEach(input => {
     input.style.width = input.scrollWidth + 'px'
     input.addEventListener('input', e => e.target.style.width = e.target.scrollWidth + 'px')
-
 })
 
 editButtons.forEach(b => {

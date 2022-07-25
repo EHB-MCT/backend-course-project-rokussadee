@@ -29,4 +29,9 @@ class FeedbackForm extends Model
         return $this->belongsToMany(Question::class,'questions_feedback_forms', 'feedback_form_id', 'question_id' );
     }
 
+//    public function formResults()
+//    {
+//        return $this->belongsToMany(FeedbackForm::class,);
+//    }
+
 }

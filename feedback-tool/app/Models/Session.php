@@ -12,7 +12,9 @@ class Session extends Model
     protected $fillable =[
         'title',
         'started_at',
-        'ended_at'
+        'ended_at',
+        'slug',
+        'respondent'
     ];
 
     public function user() {
@@ -20,6 +22,6 @@ class Session extends Model
     }
 
     public function forms() {
-        return $this->belongsToMany(Session::class, 'feedback_forms_sessions', 'session_id', 'feedback_form_id');
+        return $this->belongsToMany(FeedbackForm::class, 'feedback_forms_sessions', 'session_id', 'feedback_form_id');
     }
 }

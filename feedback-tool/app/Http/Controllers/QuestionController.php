@@ -36,16 +36,11 @@ class QuestionController extends Controller
         $form = FeedbackForm::class::where('id' ,'=', $id)->first();
         $form->questions()->attach($question);
 
-
         return Redirect::back()->with('message', 'A new question has been added to this form.');
     }
 
-    public function update(Request $request, $id)
+    public function updateTitle(Request $request, $id)
     {
-//        $validator = Validator::make($request->all(), [
-//           ""
-//        ]);
-//        dd($request->title);
         Question::class::where('id', '=', $id)->update([
             'title' => $request->title
         ]);

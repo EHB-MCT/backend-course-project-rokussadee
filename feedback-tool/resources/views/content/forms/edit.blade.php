@@ -29,37 +29,41 @@
 
                     <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200">
                         <!-- header -->
-                        <div class="flex justify-between mb-4">
+                        <div>
+                            <p class="text-xl font-semibold text-neutral-700">{{$form->title}}</p>
+                        </div>
+                        <div class="flex justify-between" >
                             <div>
-                                <p class="text-lg font-semibold text-neutral-700">{{$form->title}}</p>
-                                <p class="mt-0.5  text-neutral-400 text-sm"></p>
-                            </div>
-                            @can('user_management_access')
-                                <div class="text-right">
+{{--                                @can('user_management_access')--}}
                                     <p class="mt-1.5 text-neutral-400 text-sm">{{$form->user->name}}</p>
+{{--                                @endcan--}}
+
+                                <div class="flex items-center justify-between">
+                                    <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
                                 </div>
-                            @endcan
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>
+                            </div>
                         </div>
                         <!-- bedge -->
-                        <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>
+                        <form class="mt-4" action="{{route('content.updatedescription', ['slug' => $form->slug])}}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input class="text-neutral-400 text-lg bg-white" value="{{$form->description}}" name="description" id="input{{$form->slug}}" readonly disabled>
 
-
-                        <div class="flex items-center justify-between mt-5">
-                            <div class="flex items-center">
-                                <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-neutral-400 text-sm">0</span>
-                            </div>
-
-                        </div>
+                            @can('form_edit')
+                                <button class="text-blue-500 text-sm py-2 px-4 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 rounded font-semibold editButton" data-id="{{$form->slug}}">Edit</button>
+                                <button class="text-green-500 text-sm py-2 px-4 bg-green-50 hover:bg-green-100 hover:text-green-800 rounded font-semibold" id="saveButton{{$form->slug}}" type="submit" hidden> Save </button>
+                            @endcan
+                        </form>
 
                         <!-- body -->
                         <div class="mt-5 border-t border-dashed space-y-4 py-4">
                             <!-- item 1 -->
                             <div class="flex-col justify-between">
                                 @foreach($questions as $question)
-                                    <form class="flex justify-between" action="{{route('question.update', ['id' => $question->id])}}" method="POST">
+                                    <form class="flex justify-between" action="{{route('question.updatetitle', ['id' => $question->id])}}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="pb-4">

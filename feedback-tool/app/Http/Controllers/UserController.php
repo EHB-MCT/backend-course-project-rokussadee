@@ -12,7 +12,7 @@ class UserController extends Controller
     public function getIndex() {
         if(Auth::user()->hasRole('Super Admin')) {
             $users = User::class::all();
-            return view('admin.users', ['admin'=>$users]);
+            return view('admin.users', ['users'=>$users]);
         } else {
             abort(403);
         }

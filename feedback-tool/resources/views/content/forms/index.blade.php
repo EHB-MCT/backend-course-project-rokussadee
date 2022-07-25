@@ -28,30 +28,28 @@
 
                     <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96">
                         <!-- header -->
-                        <div class="flex justify-between mb-4">
+                        <div class="flex justify-between">
                             <div>
                                 <p class="text-lg font-semibold text-neutral-700">{{$form->title}}</p>
-                                <p class="mt-0.5  text-neutral-400 text-sm"></p>
                             </div>
-                            @can('user_management_access')
-                            <div class="text-right">
-                                <p class="mt-1.5 text-neutral-400 text-sm">{{$form->user->name}}</p>
-                            </div>
-                            @endcan
+
                         </div>
                         <!-- bedge -->
-                        <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>
+                        <div class="flex justify-between" >
+                            <div>
+{{--                                @can('user_management_access')--}}
+                                    <p class="mt-1.5 text-neutral-400 text-sm">{{$form->user->name}}</p>
+{{--                                @endcan--}}
 
-
-                        <div class="flex items-center justify-between mt-5">
-                            <div class="flex items-center">
-                                <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
+                                <div class="flex items-center justify-between">
+                                        <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
+                                </div>
                             </div>
-                            <div class="flex items-center">
-                                <span class="text-neutral-400 text-sm">0</span>
+                            <div class="flex items-center justify-center">
+                                    <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>
                             </div>
-
                         </div>
+
 
                         <!-- body -->
                         <div class="mt-5 border-t border-dashed space-y-4 py-4">

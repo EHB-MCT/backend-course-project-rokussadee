@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackForm;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 class FormController extends Controller
 {
@@ -23,13 +23,9 @@ class FormController extends Controller
     public function getForm($slug)
     {
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
-        if (Auth::user()->hasRole('User') && $form->user->id != Auth::id()) {
-            abort(403);
-        } else {
             $questions = $form->questions;
 //            dd($form);
             return view('content.forms.form', ['form'=>$form, 'questions' => $questions]);
-        }
     }
 
     public function creator()
@@ -52,22 +48,47 @@ class FormController extends Controller
             'user_id' => $request->input('user_id'),
             'slug' => Str::slug($request->input('title'))
         ]);
-//        $form->user->attach(Auth::user());
+
         $form->save();
 
-        return redirect()->route('content.form', array(Str::slug($request->input('title'))));
+        return redirect()->route('content.edit', array(Str::slug($request->input('title'))));
     }
 
     public function editForm($slug)
     {
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
 //        dd($form);
-        if ($form->user->id != Auth::id()) {
+        if (Auth::user()->hasRole('User') && $form->user->id != Auth::id()) {
             abort(403);
         } else {
             $questions = $form->questions;
-            return view('content.forms.edit', ['form'=>$form, 'questions' => $questions]);
+//            dd($form);
+            return view('content.forms.edit', ['form' => $form, 'questions' => $questions]);
         }
+    }
+
+    public function updateDescription(Request $request, $slug)
+    {
+        $form = FeedbackForm::class::where('slug', '=', $slug)->first();
+
+        if (Auth::user()->hasRole('User') && $form->user->id != Auth::id()) {
+            abort(403);
+        } else {
+            $this->validate($request, [
+                'description' => 'required|max:500'
+            ]);
+            $form->update([
+                'description' => $request->description
+            ]);
+
+            return Redirect::back()->with('message', 'The forms description has been updated.');
+        }
+    }
+
+    public function saveFormResult(Request $request, $slug)
+    {
+        $form = FeedbackForm::class::where('slug', '=', $slug)->first();
+        return view('content.dashboard', ['form' => $form, 'result' => $request->all()]);
     }
 
     public function adminDashboard() {

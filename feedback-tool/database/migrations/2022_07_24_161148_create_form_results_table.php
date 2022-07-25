@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('form_results', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('title');
             $table->string('respondent');
-            $table->dateTime('started_at');
-            $table->dateTime('ended_at');
+            $table->string('slug')->unique();
             $table->foreignId('user_id');
+            $table->foreignId('feedback_form_id');
+            $table->foreignId('session_id');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('session');
+        Schema::dropIfExists('form_results');
     }
 };

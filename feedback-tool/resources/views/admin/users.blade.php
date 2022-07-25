@@ -43,28 +43,43 @@
                         <!-- card a -->
 
                         <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96">
-                            <!-- header -->
-                            <div class="flex justify-between mb-4">
-                                <div>
-                                    <p class="text-lg font-semibold text-neutral-700">{{$user->name}}</p>
-                                    <p class="mt-0.5  text-neutral-400 text-sm"></p>
-                                </div>
-                                @can('user_management_access')
-                                    <div class="text-right">
-                                        <p class="mt-1.5 text-neutral-400 text-sm">{{$user->getRoleNames()[0]}}</p>
+                            <div class="flex-row flex items-center justify-between">
+                                <div class="flex-row gap-4 flex items-center">
+                                    <div class="flex-shrink-0 ">
+                                        <div class="flex items-center justify-center">
+                                            <div
+                                                class="bg-green-50 mx-auto object-cover rounded-full h-16 w-16 text-center text-green-500">
+                                                @foreach(explode(' ', $user->name) as $name)
+                                                {{strtoupper($name)[0]}}
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
-                                @endcan
+                                    <div class=" flex flex-col">
+                                        <span class="text-gray-600 text-lg font-medium">
+                                            {{$user->name}}
+                                        </span>
+
+                                        <span class="text-gray-400 text-xs">
+                                            @can('user_management_access')
+                                            {{$user->getRoleNames()[0]}}
+                                            @endcan
+                                        </span>
+                                    </div>
+                                </div>
+                                <a href="" class="text-blue-500 text-sm py-2 px-4 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 rounded font-semibold">
+                                    Edit
+                                </a>
+
                             </div>
+                            <!-- header -->
                             <!-- bedge -->
 {{--                            <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>--}}
 
 
                             <div class="flex items-center justify-between mt-5">
                                 <div class="flex items-center">
-{{--                                    <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>--}}
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-neutral-400 text-sm">0</span>
+                                    <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($user->forms)}} forms</span>
                                 </div>
 
                             </div>
@@ -75,10 +90,12 @@
                                 <div class="flex-col justify-between">
                                     @foreach($user->forms as $form)
                                         <div class="pb-4">
-                                            <p class="text-lg text-neutral-600">{{$form->title}}</p>
-                                                <p class="mt-1 text-sm text-neutral-400 bg-green-50 rounded-lg font-semibold px-3 py-1.5" >
-                                                    {{$form->description}}
-                                                </p>
+                                            <p class="text-lg text-neutral-600">
+                                                {{$form->title}}
+                                            </p>
+                                            <p class="mt-1 text-sm text-neutral-400 font-semibold px-3 py-1.5 bg-gradient-to-r from-green-50 to-white-500 italic" >
+                                                {{$form->description}}
+                                            </p>
                                         </div>
                                     @endforeach
                                 </div>
