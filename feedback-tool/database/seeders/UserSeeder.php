@@ -30,5 +30,6 @@ class UserSeeder extends Seeder
 
         $user1 -> assignRole('User');
         $user2 -> assignRole('User');
+
     }
 }

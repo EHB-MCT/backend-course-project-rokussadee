@@ -5,6 +5,7 @@
 
         <div class="py-12 flex flex-wrap justify-between">
             @if($form)
+
                 <div class="bg-gray-100 pb-6  w-full">
 
                     <!-- card a -->
