@@ -15,12 +15,6 @@ class FormResultSeeder extends Seeder
      */
     public function run()
     {
-        $result1 = FormResult::create([
-            'respondent' => 'Wannes',
-            'slug' => 'wannes-rokus-first-feedback-form',
-            'user_id' => 2,
-            'feedback_form_id' => 2,
-            'session_id' => 2
-        ]);
+
     }
 }

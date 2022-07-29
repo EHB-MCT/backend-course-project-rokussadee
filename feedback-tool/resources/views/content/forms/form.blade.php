@@ -1,20 +1,11 @@
 <x-app-layout>
-    <x-slot name="header" class="flex flex-row justify-between">
-            <div class="flex justify-between">
-                <div class="flex">
-                    <h2 class="flex font-semibold text-xl text-gray-800 leading-tight hidden sm:flex sm:items-center">
-                                Form: {{$form->title}}
-                    </h2>
+    @include('partials.header', ['title' => 'Form: ' . $form->title])
 
-                </div>
-
-            </div>
-    </x-slot>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="py-12 flex flex-wrap justify-between">
         @if($form)
-            <form action="{{route('content.saveformresult', ['slug'=>$form->slug])}}" method="POST" class="bg-gray-100 pb-6 w-full">
+            <form action="{{route('content.saveformresult', ['slug'=>$form->slug, 'respondent' => $session->respondent, 'session' =>$session->id])}}" method="POST" class="bg-gray-100 pb-6 w-full">
                 @csrf
                 @method('POST')
 
@@ -27,9 +18,11 @@
                     </div>
                     <div class="flex justify-between" >
                         <div>
-{{--                            @can('user_management_access')--}}
-                                <p class="mt-1.5 text-neutral-400 text-sm">{{$form->user->name}}</p>
-{{--                            @endcan--}}
+                            <p class="mt-1.5 text-neutral-400 text-sm"><span class=font-bold>By: </span>{{$form->user->name}}</p>
+                            <p class=" text-neutral-400 text-sm"><span class=font-bold>Respondent: </span>{{$session->respondent}}</p>
+                            <p class=" text-neutral-400 text-sm"><span class=font-bold>In session: </span>{{$session->title}}</p>
+
+
 
                             <div class="flex items-center justify-between">
                                 <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
@@ -61,8 +54,8 @@
                                                 <div class="flex-row">
                                                     @foreach(json_decode($question->options) as $option)
                                                         <div class="form-check form-check-inline">
-                                                            <input checked class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="Question {{$question->id}}" id="{{$option}}" value="{{$option}}">
-                                                            <label class="form-check-label inline-block text-gray-800" for="{{$option}}">{{$option}}</label>
+                                                            <input class="form-check-input focus:outline-none rounded-full h-4 w-4 border border-gray-300 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" required type="radio" name="q{{$question->id}}" id="{{$question->id}}-{{$option}}" value="{{$option}}">
+                                                            <label class="form-check-label inline-block text-gray-800" for="{{$question->id}}-{{$option}}">{{$option}}</label>
                                                         </div>
                                                     @endforeach
                                                 </div>

@@ -1,22 +1,7 @@
 
 <x-app-layout>
-    <x-slot name="header" class="flex flex-row justify-between">
-            <div class="flex justify-between">
-                <div class="flex">
-                    <h2 class="flex font-semibold text-xl text-gray-800 leading-tight hidden sm:flex sm:items-center">
-                                Forms
-                    </h2>
+    @include('partials.header', ['title' => 'All Forms'])
 
-                </div>
-
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <h3 class="flex">
-                        Sort By
-                    </h3>
-                </div>
-
-            </div>
-    </x-slot>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="py-12 flex flex-wrap justify-between">
@@ -24,13 +9,11 @@
             @foreach($forms as $form)
                 <div class="bg-gray-100 pb-6">
 
-                    <!-- card a -->
-
-                    <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96">
+                    <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96 max-h-96 overflow-hidden">
                         <!-- header -->
                         <div class="flex justify-between">
                             <div>
-                                <p class="text-lg font-semibold text-neutral-700">{{$form->title}}</p>
+                                <a href="{{route('content.editform', ['form' => $form])}}" class="text-lg font-semibold text-neutral-700">{{$form->title}}</a>
                             </div>
 
                         </div>
@@ -45,14 +28,14 @@
                                         <span class="text-neutral-400 text-sm">Added {{now()->diff($form->created_at)->format('%d d')}} ago.</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" >
                                     <span class="text-green-500 px-3 text-sm py-1.5 bg-green-50 rounded-lg font-semibold">{{count($form->questions)}} questions</span>
                             </div>
                         </div>
 
 
                         <!-- body -->
-                        <div class="mt-5 border-t border-dashed space-y-4 py-4">
+                        <div class="mt-5 border-t border-dashed space-y-4 py-4" >
                             <!-- item 1 -->
                             <div class="flex-col justify-between">
                                 @foreach($form->questions as $question)

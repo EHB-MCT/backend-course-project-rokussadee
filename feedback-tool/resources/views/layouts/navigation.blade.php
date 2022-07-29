@@ -18,8 +18,14 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('content.forms')" :active="request()->routeIs('forms')">
+                    <x-nav-link :href="route('content.forms')" :active="request()->routeIs('content.*')">
                         {{ __('Forms') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('sessions.sessions')" :active="request()->routeIs('sessions.*')">
+                        {{ __('Sessions') }}
                     </x-nav-link>
                 </div>
 {{--                @can('user_management_access')--}}

@@ -119,6 +119,8 @@
       <excludeFolder url="file://$MODULE_DIR$/feedback-tool/vendor/nette/utils" />
       <excludeFolder url="file://$MODULE_DIR$/feedback-tool/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/feedback-tool/vendor/spatie/laravel-permission" />
+      <excludeFolder url="file://$MODULE_DIR$/feedback-tool/vendor/barryvdh/laravel-debugbar" />
+      <excludeFolder url="file://$MODULE_DIR$/feedback-tool/vendor/maximebf/debugbar" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -11,7 +11,15 @@ class FormResult extends Model
 
     protected $fillable = [
         'respondent',
-        'slug'
+        'slug',
+        'answers',
+        'user_id',
+        'feedback_form_id',
+        'session_id'
+    ];
+
+    protected $casts = [
+        'answers' => 'array'
     ];
 
     public function user()

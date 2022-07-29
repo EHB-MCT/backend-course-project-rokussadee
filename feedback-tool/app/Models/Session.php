@@ -14,6 +14,7 @@ class Session extends Model
         'started_at',
         'ended_at',
         'slug',
+        'user_id',
         'respondent'
     ];
 

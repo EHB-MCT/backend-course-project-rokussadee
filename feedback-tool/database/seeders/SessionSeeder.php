@@ -22,7 +22,7 @@ class SessionSeeder extends Seeder
             'started_at' => now(),
             'ended_at' => now(),
             'user_id' => 1,
-            'respondent' => 'Alice',
+            'respondent' => 'bokus.badee@gmail.com',
             'slug' => 'admin-first-session'
         ]);
 
@@ -32,7 +32,7 @@ class SessionSeeder extends Seeder
             'started_at' => now(),
             'ended_at' => now(),
             'user_id' => 2,
-            'respondent' => 'Wannes',
+            'respondent' => 'bokus.badee@gmail.com',
             'slug' => 'rokus-first-session'
         ]);
 

@@ -14,9 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('form_results', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique();
             $table->string('respondent');
             $table->string('slug')->unique();
+            $table->json('answers');
             $table->foreignId('user_id');
             $table->foreignId('feedback_form_id');
             $table->foreignId('session_id');

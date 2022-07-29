@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackForm;
+use App\Models\FormResult;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -20,12 +22,23 @@ class FormController extends Controller
         return view('content.forms.index', ['forms'=>$forms]);
     }
 
-    public function getForm($slug)
+    public function getForm($slug, $sessionid)
     {
+        $session = Session::class::where('id', '=', $sessionid)->first();
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
             $questions = $form->questions;
 //            dd($form);
-            return view('content.forms.form', ['form'=>$form, 'questions' => $questions]);
+        return view('content.forms.form', ['form'=>$form, 'session'=>$session, 'questions' => $questions]);
+    }
+
+    public function getFormResult($id)
+    {
+        $formresult = FormResult::class::where('id', '=', $id)->first();
+        $session = Session::class::where('id', '=', $formresult->session_id)->first();
+        $form = FeedbackForm::class::where('id', '=', $formresult->feedback_form_id)->first();
+        $questions = $form->questions;
+
+        return view('content.forms.formresult', ['form' =>$form,'formresult' => $formresult, 'session' => $session, 'questions' => $questions]);
     }
 
     public function creator()
@@ -51,18 +64,16 @@ class FormController extends Controller
 
         $form->save();
 
-        return redirect()->route('content.edit', array(Str::slug($request->input('title'))));
+        return redirect()->route('content.editform', array(Str::slug($request->input('title'))));
     }
 
     public function editForm($slug)
     {
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
-//        dd($form);
         if (Auth::user()->hasRole('User') && $form->user->id != Auth::id()) {
             abort(403);
         } else {
             $questions = $form->questions;
-//            dd($form);
             return view('content.forms.edit', ['form' => $form, 'questions' => $questions]);
         }
     }
@@ -85,10 +96,27 @@ class FormController extends Controller
         }
     }
 
-    public function saveFormResult(Request $request, $slug)
+    public function saveFormResult(Request $request, $slug, $respondent, $sessionid)
     {
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
-        return view('content.dashboard', ['form' => $form, 'result' => $request->all()]);
+        $session = Session::class::where('id', '=', $sessionid)->first();
+
+        $data = $request->except(['_token', '_method']);
+
+//        dd($data);
+
+        $formresult = new FormResult([
+           'respondent' => $respondent,
+            'slug' => $slug . $sessionid,
+            'answers' => json_encode($data),
+            'feedback_form_id' => $form->id,
+            'user_id' => $form->user_id,
+            'session_id' => $sessionid
+        ]);
+
+        $formresult->save();
+
+        return redirect()->route('sessions.sessionaccess', ['session' => $session]);
     }
 
     public function adminDashboard() {

@@ -1,15 +1,5 @@
 <x-app-layout>
-    <x-slot name="header" class="flex flex-row justify-between">
-        <div class="flex justify-between">
-            <div class="flex">
-                <h2 class="flex font-semibold text-xl text-gray-800 leading-tight hidden sm:flex sm:items-center">
-                    Session: {{$session->title}}
-                </h2>
-
-            </div>
-
-        </div>
-    </x-slot>
+    @include('partials.header', ['title' => 'Session: ' . $session->title])
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="py-12 flex flex-wrap justify-between">
@@ -40,7 +30,11 @@
                         <!-- bedge -->
                         <div class="mt-4">
                             <p class="text-neutral-400 text-lg">
-                                Description
+                                @if(count($session->forms) != 0)
+                                    Choose one of the following forms to fill in.
+                                @else
+                                    Forms will soon be added to this page.
+                                @endif
                             </p>
                         </div>
 
@@ -60,6 +54,11 @@
 
                                             <div class="flex">
                                                 <p>This form has been submitted!</p>
+
+                                                @if(\Illuminate\Support\Facades\Route::is('sessions.editsession'))
+                                                @can('session_edit')<a href="{{route('content.formresult', ['id' => \App\Models\FormResult::class::where([['respondent', '=', $session->respondent], ['feedback_form_id', '=', $form->id]])->get()->first()->id])}}" class="text-blue-500">Click here to see answers.</a>@endcan
+                                                @endif
+
                                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="block m-auto ml-2 align-middle w-4 h-4 mr-2 fill-green-500" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                     <path fill="green-500" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
                                                 </svg>
@@ -78,12 +77,19 @@
                                                 </div>
                                             </div>
 
-                                            <div class="inline-flex bg-blue-50 p-2 border-2 rounded-md border-blue-500 ">
-                                                <p class="text-blue-500">Start this form</p>
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="block m-auto ml-2 w-4 h-4 mr-2 fill-blue-500" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                    <path fill="blue-500" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-                                                </svg>
-                                            </div>
+                                                @if(\Illuminate\Support\Facades\Route::is('sessions.sessionaccess'))
+                                                    <div class="inline-flex bg-blue-50 p-2 border-2 rounded-md border-blue-500 ">
+                                                        <a href="{{route('content.form', ['form' => $form, 'session'=>$session])}}" class="text-blue-500">Start this form</a>
+                                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="block m-auto ml-2 w-4 h-4 mr-2 fill-blue-500" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                            <path fill="blue-500" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+                                                        </svg>
+                                                    </div>
+                                                @else
+                                                    <div class="inline-flex bg-orange-50 p-2 border-2 rounded-md border-orange-500 ">
+                                                        <p href="{{route('content.form', ['form' => $form, 'session'=>$session])}}" class="text-orange-500">The respondent hasn't completed this form yet.</p>
+                                                    </div>
+
+                                                @endif
                                         </div>
                                     @endif
                                 @endforeach
