@@ -73,8 +73,22 @@
                                     </form>
                                 @endforeach
                             </div>
+                            <div class="">
+                                <div class="relative bg-gradient-to-tl from-blue-700 via-blue-500 to-blue-500 p-8 rounded-lg shadow-lg w-80 h-16">
+                                    <button class="absolute top-5 left-4 text-lg font-semibold text-white hover:text-xl duration-500 ">
+                                        Create a new question →
+                                    </button>
+                                    <div class="absolute top-0 left-0 w-80 h-16 border-4 border-blue-500 blur-sm group-hover:blur-lg z-o pointer-events-none hover:duration-500"></div>
+                                    <div class="absolute bottom-0 right-0 h-16 w-16 bg-gradient-to-tl from-transparent via-transparent to-blue-900 rounded-2xl blur-sm"></div>
+                                    <div class="absolute bottom-0 right-0 h-16 w-16 shadow-inner shadow-blue-600 bg-gradient-to-tr from-blue-600 via-transparent to-blue-600 rounded-tl-3xl rounded-br-md rounded-tr-md"></div>
+                                    <button id="open-btn" class="group pointer-events-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="absolute bottom-0 right-0 h-16 w-16 text-blue-600 text-white group-hover:rotate-180 duration-1000"  fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-center py-0.5 bg-neutral-100 text-neutral-400 font-semibold rounded-lg mt-3">+1 more</div>
                     </div>
 
 
@@ -83,7 +97,47 @@
 
         </div>
     </div>
+
+    <div
+        class="fixed hidden inset-0 bg-blue-50 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full"
+        id="my-modal"
+    ></div>
+
     @include('partials.createquestion')
+
+<!--modal content-->
+{{--    Script for modal/blur overlay when creating a question.
+        Based on following code
+        https://www.section.io/engineering-education/creating-a-modal-dialog-with-tailwind-css/--}}
+    <script>
+        // Grabs all the Elements by their IDs which we had given them
+        let backdrop = document.getElementById("my-modal");
+
+        let modal = document.getElementById("modalContainer");
+
+        let btn = document.getElementById("open-btn");
+
+        let button = document.getElementById("ok-btn");
+
+        // We want the modal to open when the Open button is clicked
+        btn.onclick = function() {
+            backdrop.style.display = "block";
+            modal.style.top = "12rem";
+        }
+
+        // We want the modal to close when the OK button is clicked
+        button.onclick = function() {
+            backdrop.style.display = "none";
+            modal.style.top = "-999px";
+        }
+
+        // The modal will close when the user clicks anywhere outside the modal
+        window.onclick = function(event) {
+            if (event.target == backdrop) {
+                backdrop.style.display = "none";
+                modal.style.top = "-999px";
+            }
+        }
+    </script>
     <script src="{!! asset('js/editform.js') !!}" type="module"></script>
-{{--    <script src="{{asset('js/auto.js')}}"></script>--}}
 </x-app-layout>

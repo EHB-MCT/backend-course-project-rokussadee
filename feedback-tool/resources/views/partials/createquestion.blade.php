@@ -1,11 +1,11 @@
-<div>
-<form class="bg-gray-100 pb-6"  action={{route('question.postquestion', ['form'=>$form])}} method="POST">
+<div >
+<form class="bg-gray-100 pb-6"  action="{{route('question.postquestion', ['form'=>$form])}}" method="POST" >
 
     <!-- card a -->
     @csrf
     @method('POST')
 
-    <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96">
+    <div class="absolute left-0 right-0 -top-full mx-auto bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96 transition" id="modalContainer">
         <!-- header -->
         <div class="flex items-center justify-between mt-5">
             <div class="flex items-center">
@@ -33,6 +33,10 @@
             <label for="categorySelection">Voeg categorieën toe:</label>
             <select id="categorySelection" multiple class="livesearch form-control p-3" name="livesearch[]"></select>
         </div>
+
+{{--        jQuery script for categories autosuggestion.
+            Based on following code:
+            https://www.tutsmake.com/laravel-8-autocomplete-search-from-database-tutorial/--}}
         <script type="text/javascript">
             $('#categorySelection').select2({
                 placeholder: 'Categorie',
@@ -85,7 +89,7 @@
 
         <!-- body -->
 
-        <button class="text-green-500 text-sm py-2 px-4 bg-green-50 hover:bg-green-100 hover:text-green-800 rounded font-semibold" type="submit" name="submit"> Submit Question </button>
+        <button class="text-green-500 text-sm py-2 px-4 bg-green-50 hover:bg-green-100 hover:text-green-800 rounded font-semibold" type="submit" name="submit" id="ok-btn"> Submit Question </button>
 
     </div>
 

@@ -13,6 +13,9 @@
             <h2 class="flex font-semibold text-xl text-gray-800 leading-tight hidden sm:flex sm:items-center">
                 {{$title}}
             </h2>
+        </div>
+
+    </div>
             @if(\Illuminate\Support\Facades\Session::has('message'))
                 <div class="bg-green-50 border border-green-400 text-green-800 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold text-green-500">Successful!</strong>
@@ -23,9 +26,6 @@
                 </div>
 
             @endif
-        </div>
-
-    </div>
 {{--    <a href="{{route($url)}}" class="max-w-7xl m-0">--}}
 {{--        <div class="">--}}
 {{--            <div class="relative group pointer-events-auto">--}}
