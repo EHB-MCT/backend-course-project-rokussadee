@@ -29,9 +29,6 @@
                         <!-- bedge -->
                         <div class="flex justify-between" >
                             <div>
-{{--                                @can('user_management_access')--}}
-{{--                                    <p class="text-neutral-400 text-sm">zaha</p>--}}
-{{--                                @endcan--}}
                                 <div class="mt-2 w-32 h-8 shadow-inner shadow-blue-600 rounded-sm bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500"></div>
 
                                 <div class="mt-2 flex items-center justify-between">
@@ -49,7 +46,7 @@
                             <div class="mt-2 w-72 h-8 shadow-inner shadow-blue-600 rounded-sm bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500"></div>
                             <div class="mt-2 w-24 h-8 shadow-inner shadow-blue-600 rounded-sm bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500"></div>
                             <div class="mt-2 w-32 h-8 shadow-inner shadow-blue-600 rounded-sm bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500"></div>
-                            <p class="text-lg font-semibold text-white">Create a new form →</p>
+                            <a href="{{route('content.createform')}}" class="block text-lg font-semibold text-white hover:text-xl duration-500">Create a new form →</a>
 
                         </div>
                     </div>
@@ -89,7 +86,8 @@
                         <div class="mt-5 border-t border-dashed space-y-4 py-4" >
                             <!-- item 1 -->
                             <div class="flex-col justify-between">
-                                @foreach($form->questions as $index => $question)
+                                @foreach($form->questions as $question)
+                                    @if($loop->index < 2)
                                     <div class="pb-4">
                                         <p class="text-lg text-neutral-600">{{$question->title}}</p>
                                         <div class="flex-row">
@@ -98,18 +96,21 @@
                                             @endforeach
                                         </div>
                                     </div>
+                                    @endif
                                 @endforeach
-
+                                @if(count($form->questions) > 2)
+                                    <a href="{{route('content.editform', ['form' => $form])}}" class="relative group pointer-events-auto mb-3">
+                                        <div class="absolute -inset-1 bg-gradient-to-r from-white to-blue-500 rounded-lg blur opacity-0 group-hover:opacity-25 transition duration-300 group-hover:duration-200"></div>
+                                        <div class="group-hover:border-opacity-0 group-hover:duration-300 duration-300 px-1 py-1 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex justify-start items-center space-x-6">
+                                            <div class="ml-1 text-blue-500 transition duration-200 group-hover:text-gray-800">+{{count($form->questions)-2}} more</div>
+                                        </div>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             @endforeach
-        @elseif(count($forms)<1)
-            @include('partials.empty', ['content' => 'forms', 'url' => 'content.createform'])
-        @endif
     </div>
     </div>
 </x-app-layout>
