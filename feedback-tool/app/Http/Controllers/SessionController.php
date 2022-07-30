@@ -70,7 +70,7 @@ class SessionController extends Controller
 
         $session->save();
 
-        app('\App\Http\Controllers\MailController')->index(\route('sessions.sessionaccess', array(Str::slug($request->input('title') . '-' . $request->input('respondent')))), $request->input('respondent'));
+        app('\App\Http\Controllers\MailController')->newsession(\route('sessions.sessionaccess', array(Str::slug($request->input('title') . '-' . $request->input('respondent')))), $request->input('respondent'));
 
         return Redirect::route('sessions.editsession', array(Str::slug($request->input('title') . '-' . $request->input('respondent'))));
 

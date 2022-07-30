@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use \App\Models\User;
 use App\Models\FeedbackForm;
 use App\Models\FormResult;
 use App\Models\Session;
@@ -100,10 +101,9 @@ class FormController extends Controller
     {
         $form = FeedbackForm::class::where('slug', '=', $slug)->first();
         $session = Session::class::where('id', '=', $sessionid)->first();
+        $user = User::class::where('id', '=', $session->user_id)->first();
 
         $data = $request->except(['_token', '_method']);
-
-//        dd($data);
 
         $formresult = new FormResult([
            'respondent' => $respondent,
@@ -115,6 +115,8 @@ class FormController extends Controller
         ]);
 
         $formresult->save();
+
+        app('\App\Http\Controllers\MailController')->newresult(\route('content.formresult', ['id' => $formresult->id]), $respondent, $user->email);
 
         return redirect()->route('sessions.sessionaccess', ['session' => $session]);
     }

@@ -30,6 +30,6 @@ class DemoMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('A new session has been added.')->view('content.mail');
+        return $this->subject('Feedback Tool: Notification')->view('content.mail');
     }
 }
