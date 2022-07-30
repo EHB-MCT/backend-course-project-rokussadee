@@ -17,4 +17,14 @@ class UserController extends Controller
             abort(403);
         }
     }
+
+    public function getUser($id)
+    {
+        if(Auth::user()->hasRole('Super Admin')) {
+            $user = User::class::where('id', '=', $id)->first();
+            return view('admin.user', ['user' => $user]);
+        } else {
+            abort(403);
+        }
+    }
 }

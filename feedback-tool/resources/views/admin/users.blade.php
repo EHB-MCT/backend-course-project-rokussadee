@@ -1,47 +1,12 @@
-{{--@extends('layouts.app')--}}
-
 <x-app-layout>
-    <x-slot name="header" class="flex flex-row justify-between">
-        <div class="flex justify-between">
-            <div class="flex">
-                <h2 class="flex font-semibold text-xl text-gray-800 leading-tight hidden sm:flex sm:items-center">
-                    Users
-                </h2>
-
-            </div>
-
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <h3 class="flex">
-                    Sort By
-                </h3>
-            </div>
-
-        </div>
-    </x-slot>
+    @include('partials.header', ['title' => 'All Users'])
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="py-12 flex flex-wrap justify-between">
-            {{--    @if($content)--}}
-            {{--        @foreach($content as $form)--}}
-            {{--            <div class="py-6">--}}
-            {{--                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-            {{--                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
-            {{--                        <div class="p-6 bg-white border-b border-gray-200">--}}
-            {{--                            {{$form->title}}--}}
-            {{--                        </div>--}}
-            {{--                        @include('components.button')--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-            {{--        @endforeach--}}
-            {{--    @endif()--}}
             @if($users)
                 @foreach($users as $user)
                     <div class="bg-gray-100 pb-6">
-
-                        <!-- card a -->
-
                         <div class="bg-white p-8 rounded-lg shadow-lg shadow-neutral-200 w-96">
                             <div class="flex-row flex items-center justify-between">
                                 <div class="flex-row gap-4 flex items-center">
@@ -56,9 +21,9 @@
                                         </div>
                                     </div>
                                     <div class=" flex flex-col">
-                                        <span class="text-gray-600 text-lg font-medium">
+                                        <a href="{{route('admin.user', ['id' => $user->id])}}" class="text-gray-600 text-lg font-medium">
                                             {{$user->name}}
-                                        </span>
+                                        </a>
 
                                         <span class="text-gray-400 text-xs">
                                             @can('user_management_access')

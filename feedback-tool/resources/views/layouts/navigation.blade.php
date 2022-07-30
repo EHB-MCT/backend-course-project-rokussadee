@@ -28,13 +28,13 @@
                         {{ __('Sessions') }}
                     </x-nav-link>
                 </div>
-{{--                @can('user_management_access')--}}
-{{--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
-{{--                    <x-nav-link :href="route('admin.users')" :active="request()->routeIs('users')">--}}
-{{--                        {{ __('Users') }}--}}
-{{--                    </x-nav-link>--}}
-{{--                </div>--}}
-{{--                @endcan--}}
+                @can('user_management_access')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->

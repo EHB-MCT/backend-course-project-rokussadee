@@ -48,7 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function(){
     });
 
     Route::prefix('admin')->name('admin.')->group( function() {
-        Route::get('/users', [UserController::class, 'getIndex'])->name('admin');
+        Route::get('/users', [UserController::class, 'getIndex'])->name('users');
+        Route::get('/user/{id}', [UserController::class, 'getUser'])->name('user');
     });
 
     Route::get('ajax-autocomplete-search', [AutoCompleteController::class,'selectSearch']);
