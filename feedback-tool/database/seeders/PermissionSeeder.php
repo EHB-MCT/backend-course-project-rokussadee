@@ -65,9 +65,7 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create([
-                'name' => $permission
-            ]);
+            Permission::create(['name' => $permission]);
         }
 
         // gets all permissions via Gate::before rule; see AuthServiceProvider
