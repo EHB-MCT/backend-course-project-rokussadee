@@ -16,7 +16,12 @@ php artisan migrate:refresh
 php artisan db:seed
 php artisan serve
 ```
-na npm install en composer install, kan er ingelogd worden met e-mail 'mikederycke@backend' en wachtwoord 'backendisawesome'
+
+To access admin features, login with following credentials:
+```bash
+admin@ehb.be 
+admin 
+```
 
 ## Acknowledgements:
 - [MailController](https://www.itsolutionstuff.com/post/laravel-9-mail-laravel-9-send-email-tutorialexample.html)
